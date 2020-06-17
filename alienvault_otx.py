@@ -25,8 +25,7 @@ class OTX:
 			if pulse_id != None:
 
 				yield "Pulse ID: " + pulse_id + "\n" + "Name: " + name + "\n" + "Description: " + description + "\n"
-
-
+				
 
 	def otx_all(self):
 
