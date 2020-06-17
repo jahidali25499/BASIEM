@@ -1,5 +1,3 @@
-import asyncio
-from sql_database import SQL_Database
 import time
 from apscheduler.schedulers.background import BackgroundScheduler
 
@@ -34,15 +32,3 @@ try:
 except KeyboardInterrupt:
     time.sleep(5)
     scheduler.shutdown()
-
-
-
-
-
-
-
-
-    
-        
-
-    
