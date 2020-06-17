@@ -20,8 +20,6 @@ class Alerts:
         self.foreign_device(packet)
 
 
-        
-
     def insert_into_database(self):
 
         print("Inserting Alerts")
@@ -77,7 +75,7 @@ class Alerts:
 
 
     def password_fail_reinit(self, packet):
-
+        
         try:
             error_code = packet["_source"]["layers"]["bacapp"]["bacapp.error_code"]
 
@@ -123,7 +121,6 @@ class Alerts:
 
         except KeyError:
             pass
-
 
 
     def test_sql(self):
