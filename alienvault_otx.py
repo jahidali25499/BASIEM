@@ -6,7 +6,6 @@ from sql_database import SQL_Database
 class OTX:
 
 	def __init__(self, otx_key):
-
 		self.otx = OTXv2(str(otx_key))
 
 
@@ -46,8 +45,6 @@ class OTX:
 
 
 search = OTX("880c7334ad91a33971f56b1b3ad974738fd3d02a2ead6fd963d046afcbdb67f3")
-
-
 all_pulses = search.otx_all()
 
 
