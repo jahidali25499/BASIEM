@@ -1,0 +1,39 @@
+
+[
+	{	
+		"device_name": "myBacnetDevice01",
+		"object_name": "analogInput",
+		"object_number": 1,
+		"property": "present_value",
+		"expression": ">",
+		"value": 23,
+		"search_value": 300,
+		"search_unit": "DAY",
+		"alert": "Temperature Limit Exceeded"
+	},
+
+	{
+		"device_name": "myBacnetDevice01",
+		"object_name": "binaryInput",
+		"object_number": 1,
+		"property": "present_value",
+		"expression": "=",
+		"value": 0,
+		"search_value": 300,
+		"search_unit": "DAY",
+		"alert": "Air Conditioning Unit Switched Off"
+	},
+
+	{
+		"device_name": "myBacnetDevice01",
+		"object_name": "analogValue",
+		"object_number": 1,
+		"property": "present_value",
+		"expression": ">",
+		"value": 25,
+		"search_value": 300,
+		"search_unit": "DAY",
+		"alert": "Test Alert"
+	}
+
+]
