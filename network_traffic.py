@@ -9,8 +9,7 @@ import time
 class Network_Traffic:
 
     def __init__(self, input_file):
-        
-
+	
         self.sql = SQL_Database()
         self.cursor = self.sql.mydb.cursor()
 
@@ -162,7 +161,6 @@ class Network_Traffic:
 
         self.alerts.insert_into_database()
             
-
 
 network = Network_Traffic("re-init.json")
 network.insert_traffic()
