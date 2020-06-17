@@ -16,7 +16,6 @@ class Device_Alerts:
 			self.json_file = json.load(file)
 
 
-
 	def is_number(self, number):
 
 		try:
@@ -25,8 +24,7 @@ class Device_Alerts:
 
 		except ValueError:
 			return False
-
-
+		
 
 	def device_alerts_bacnet(self):
 
@@ -63,14 +61,8 @@ class Device_Alerts:
 				else:
 					if ineq_dict[expression](entry[4], value):
 						print(alert, entry[0])
-
-
+						
 
 
 device = Device_Alerts("device_rules.json")
 device.device_alerts_bacnet()
-
-
-
-
-
