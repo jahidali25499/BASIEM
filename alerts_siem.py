@@ -29,6 +29,8 @@ class Alerts:
 
         sql_command = '''INSERT INTO alerts (id_network_traffic, alert) VALUES (%s,%s) '''
         values = self.alerts_list
+        
+        # Using 'executemany' addresses the speed issues and inserts data far more quickly
         self.cursor.executemany(sql_command, values)
         self.sql.mydb.commit()
         
