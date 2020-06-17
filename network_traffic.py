@@ -20,7 +20,6 @@ class Network_Traffic:
         self.alerts = Alerts()
         
 
-        
     def mstp_read(self):
 
         mstp_name = None
@@ -40,8 +39,7 @@ class Network_Traffic:
 
 
     def insert_into_database(self):
-        
-
+		
         sql_command = '''INSERT INTO network_traffic (`L2 src address`, `L2 dst address`, `L3 src address`, `L3 dst address`, `L4 src port`, `L4 dst port`, `bacnet dnet`,
 							`bacnet hopc`, `frame all`, `eth all`, `ip all`,
 							`udp all`, `bvlc all`, `bacnet all`, `bacapp all`,
@@ -153,7 +151,6 @@ class Network_Traffic:
         print("Finished in %.2f secs" %(result))
 
 
-
     def insert_alerts(self):
 
         for packet in self.json_file:
@@ -162,7 +159,7 @@ class Network_Traffic:
         self.alerts.insert_into_database()
             
 
-network = Network_Traffic("re-init.json")
+network = Network_Traffic("example_traffic/re-init.json")
 network.insert_traffic()
 network.insert_alerts()
     
