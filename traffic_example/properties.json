@@ -1,0 +1,603 @@
+{
+   "BacnetObjectDescription": [
+      {
+         "typeId": "accumulator",
+         "propsId": [
+            "presentValue",
+            "statusFlags",
+            "eventState",
+            "outOfService",
+            "units",
+            "scale"
+         ]
+      },
+      {
+         "typeId": "analogInput",
+         "propsId": [
+            "presentValue",
+            "statusFlags",
+            "eventState",
+            "outOfService",
+            "units"
+         ]
+      },
+      {
+         "typeId": "analogOutput",
+         "propsId": [
+            "presentValue",
+            "statusFlags",
+            "eventState",
+            "outOfService",
+            "units",
+            "priorityArray",
+            "relinquishDefault"
+         ]
+      },
+      {
+         "typeId": "analogValue",
+         "propsId": [
+            "presentValue",
+            "statusFlags",
+            "eventState",
+            "outOfService",
+            "units"
+         ]
+      },
+      {
+         "typeId": "binaryInput",
+         "propsId": [
+            "presentValue",
+            "statusFlags",
+            "eventState",
+            "outOfService",
+            "polarity"
+         ]
+      },
+      {
+         "typeId": "binaryOutput",
+         "propsId": [
+            "presentValue",
+            "statusFlags",
+            "eventState",
+            "outOfService",
+            "priorityArray",
+            "relinquishDefault"
+         ]
+      },
+      {
+         "typeId": "binaryValue",
+         "propsId": [
+            "presentValue",
+            "statusFlags",
+            "eventState",
+            "outOfService"
+         ]
+      },
+      {
+         "typeId": "calendar",
+         "propsId": [
+            "presentValue",
+            "inProcess",
+            "dateList"
+         ]
+      },
+      {
+         "typeId": "command",
+         "propsId": [
+            "presentValue",
+            "inProcess",
+            "allWritesSuccessful",
+            "action"
+         ]
+      },
+      {
+         "typeId": "device",
+         "propsId": [
+            "systemStatus",
+            "vendorName",
+            "vendorIdentifier",
+            "modelName",
+            "firmwareRevision",
+            "applicationSoftwareVersion",
+            "location",
+            "description",
+            "protocolVersion",
+            "protocolRevision",
+            "protocolServicesSupported",
+            "protocolObjectTypesSupported",
+            "maxApduLengthAccepted",
+            "segmentationSupported",
+            "apduTimeout",
+            "numberOfApduRetries",
+            "deviceAddressBinding",
+            "databaseRevision"
+         ]
+      },
+      {
+         "typeId": "eventEnrollment",
+         "propsId": [
+            "eventType",
+            "notifyType",
+            "eventParameters",
+            "eventState",
+            "eventEnable",
+            "ackedTransitions",
+            "notificationClass",
+            "eventTimeStamps",
+            "eventDetectionEnable",
+            "statusFlags",
+            "reliability"
+         ]
+      },
+      {
+         "typeId": "file",
+         "propsId": [
+            "fileType",
+            "fileSize",
+            "modificationDate",
+            "archive",
+            "readOnly",
+            "fileAccessMethod"
+         ]
+      },
+      {
+         "typeId": "group",
+         "propsId": [
+            "listOfGroupMembers",
+            "presentValue"
+         ]
+      },
+      {
+         "typeId": "lifeSafetyPoint",
+         "propsId": [
+            "presentValue",
+            "trackingValue",
+            "statusFlags",
+            "eventState",
+            "reliability",
+            "outOfService",
+            "mode",
+            "acceptedModes",
+            "silenced",
+            "operationExpected"
+         ]
+      },
+      {
+         "typeId": "lifeSafetyZone",
+         "propsId": [
+            "presentValue",
+            "trackingValue",
+            "statusFlags",
+            "eventState",
+            "outOfService",
+            "reliability",
+            "mode",
+            "acceptedModes",
+            "silenced",
+            "operationExpected",
+            "zoneMembers"
+         ]
+      },
+      {
+         "typeId": "loop",
+         "propsId": [
+            "presentValue",
+            "statusFlags",
+            "eventState",
+            "outOfService",
+            "outputUnits",
+            "manipulatedVariableReference",
+            "controlledVariableReference",
+            "controlledVariableValue",
+            "controlledVariableUnits",
+            "setpointReference",
+            "setpoint",
+            "action",
+            "priorityForWriting"
+         ]
+      },
+      {
+         "typeId": "multiStateInput",
+         "propsId": [
+            "presentValue",
+            "statusFlags",
+            "eventState",
+            "outOfService",
+            "numberOfStates"
+         ]
+      },
+      {
+         "typeId": "multiStateOutput",
+         "propsId": [
+            "presentValue",
+            "statusFlags",
+            "eventState",
+            "outOfService",
+            "numberOfStates",
+            "priorityArray",
+            "relinquishDefault"
+         ]
+      },
+      {
+         "typeId": "multiStateValue",
+         "propsId": [
+            "presentValue",
+            "statusFlags",
+            "eventState",
+            "outOfService",
+            "numberOfStates"
+         ]
+      },
+      {
+         "typeId": "notificationClass",
+         "propsId": [
+            "notificationClass",
+            "priority",
+            "ackRequired",
+            "recipientList"
+         ]
+      },
+      {
+         "typeId": "program",
+         "propsId": [
+            "programState",
+            "programChange",
+            "statusFlags",
+            "outOfService"
+         ]
+      },
+      {
+         "typeId": "pulseConverter",
+         "propsId": [
+            "presentValue",
+            "statusFlags",
+            "eventState",
+            "outOfService",
+            "units",
+            "scaleFactor",
+            "adjustValue",
+            "countChangeTime",
+            "countBeforeChange"
+         ]
+      },
+      {
+         "typeId": "schedule",
+         "propsId": [
+            "presentValue",
+            "effectivePeriod",
+            "scheduleDefault",
+            "priorityForWriting",
+            "statusFlags",
+            "reliability",
+            "outOfService"
+         ]
+      },
+      {
+         "typeId": "trendLog",
+         "propsId": [
+            "statusFlags",
+            "enable",
+            "stopWhenFull",
+            "bufferSize",
+            "logBuffer",
+            "recordCount",
+            "totalRecordCount",
+            "loggingType",
+            "memberStatusFlags",
+            "eventState"
+         ]
+      },
+      {
+         "typeId": "accessDoor",
+         "propsId": [
+            "statusFlags",
+            "presentValue",
+            "eventState",
+            "reliability",
+            "outOfService",
+            "priorityArray",
+            "relinquishDefault",
+            "doorPulseTime",
+            "doorExtendedPulseTime",
+            "doorOpenTooLongTime"
+         ]
+      },
+      {
+         "typeId": "eventLog",
+         "propsId": [
+            "statusFlags",
+            "eventState",
+            "enable",
+            "stopWhenFull",
+            "bufferSize",
+            "logBuffer",
+            "recordCount",
+            "totalRecordCount"
+         ]
+      },
+      {
+         "typeId": "loadControl",
+         "propsId": [
+            "presentValue",
+            "statusFlags",
+            "requestedShedLevel",
+            "startTime",
+            "shedDuration",
+            "dutyWindow",
+            "enable",
+            "expectedShedLevel",
+            "actualShedLevel",
+            "shedLevels",
+            "shedLevelDescriptions"
+         ]
+      },
+      {
+         "typeId": "structuredView",
+         "propsId": [
+            "statusFlags",
+            "nodeType",
+            "subordinateList"
+         ]
+      },
+      {
+         "typeId": "trendLogMultiple",
+         "propsId": [
+            "statusFlags",
+            "eventState",
+            "enable",
+            "logDeviceObjectProperty",
+            "loggingType",
+            "logInterval",
+            "stopWhenFull",
+            "bufferSize",
+            "recordCount",
+            "totalRecordCount"
+         ]
+      },
+      {
+         "typeId": "accessPoint",
+         "propsId": [
+            "statusFlags",
+            "eventState",
+            "reliability",
+            "outOfService",
+            "authenticationStatus",
+            "activeAuthenticationPolicy",
+            "numberOfAuthenticationPolicies",
+            "authorizationMode",
+            "accessDoors",
+            "priorityForWriting"
+         ]
+      },
+      {
+         "typeId": "accessZone",
+         "propsId": [
+            "globalIdentifier",
+            "occupancyState",
+            "statusFlags",
+            "eventState",
+            "reliability",
+            "outOfService",
+            "entryPoints",
+            "exitPoints"
+         ]
+      },
+      {
+         "typeId": "accessUser",
+         "propsId": [
+            "globalIdentifier",
+            "statusFlags",
+            "reliability",
+            "userType",
+            "credentials"
+         ]
+      },
+      {
+         "typeId": "accessRights",
+         "propsId": [
+            "globalIdentifier",
+            "statusFlags",
+            "enable",
+            "reliability",
+            "negativeAccessRules",
+            "positiveAccessRules"
+         ]
+      },
+      {
+         "typeId": "accessCredential",
+         "propsId": [
+            "statusFlags",
+            "reliability",
+            "credentialStatus",
+            "reasonForDisable",
+            "authenticationFactors",
+            "activationTime",
+            "expiryTime",
+            "credentialDisable",
+            "assignedAccessRights"
+         ]
+      },
+      {
+         "typeId": "credentialDataInput",
+         "propsId": [
+            "presentValue",
+            "statusFlags",
+            "reliability",
+            "outOfService",
+            "supportedFormats",
+            "updateTime"
+         ]
+      },
+      {
+         "typeId": "characterstringValue",
+         "propsId": [
+            "presentValue",
+            "statusFlags"
+         ]
+      },
+      {
+         "typeId": "datetimeValue",
+         "propsId": [
+            "presentValue",
+            "statusFlags"
+         ]
+      },
+      {
+         "typeId": "largeAnalogValue",
+         "propsId": [
+            "presentValue",
+            "statusFlags",
+            "units"
+         ]
+      },
+      {
+         "typeId": "bitstringValue",
+         "propsId": [
+            "presentValue",
+            "statusFlags"
+         ]
+      },
+      {
+         "typeId": "octetstringValue",
+         "propsId": [
+            "presentValue",
+            "statusFlags"
+         ]
+      },
+      {
+         "typeId": "integerValue",
+         "propsId": [
+            "presentValue",
+            "statusFlags",
+            "units"
+         ]
+      },
+      {
+         "typeId": "positiveIntegerValue",
+         "propsId": [
+            "presentValue",
+            "statusFlags",
+            "units"
+         ]
+      },
+      {
+         "typeId": "dateValue",
+         "propsId": [
+            "presentValue",
+            "statusFlags"
+         ]
+      },
+      {
+         "typeId": "datetimePatternValue",
+         "propsId": [
+            "presentValue",
+            "statusFlags"
+         ]
+      },
+      {
+         "typeId": "timePatternValue",
+         "propsId": [
+            "presentValue",
+            "statusFlags"
+         ]
+      },
+      {
+         "typeId": "datePatternValue",
+         "propsId": [
+            "presentValue",
+            "statusFlags"
+         ]
+      },
+      {
+         "typeId": "networkSecurity",
+         "propsId": [
+            "baseDeviceSecurityPolicy",
+            "networkAccessSecurityPolicies",
+            "securityTimeWindow",
+            "packetReorderTime",
+            "distributionKeyRevision",
+            "keySets",
+            "lastKeyServer",
+            "securityPDUTimeout",
+            "updateKeySetTimeout",
+            "supportedSecurityAlgorithms",
+            "doNotHide"
+         ]
+      },
+      {
+         "typeId": "globalGroup",
+         "propsId": [
+            "presentValue",
+            "groupMembers",
+            "statusFlags",
+            "eventState",
+            "memberStatusFlags",
+            "outOfService"
+         ]
+      },
+      {
+         "typeId": "timeValue",
+         "propsId": [
+            "presentValue",
+            "statusFlags"
+         ]
+      },
+      {
+         "typeId": "notificationForwarder",
+         "propsId": [
+            "statusFlags",
+            "reliability",
+            "outOfService",
+            "recipientList",
+            "subscribedRecipients",
+            "processIdentifierFilter",
+            "localForwardingOnly"
+         ]
+      },
+      {
+         "typeId": "alertEnrollment",
+         "propsId": [
+            "presentValue",
+            "eventState",
+            "eventDetectionEnable",
+            "notificationClass",
+            "eventEnable",
+            "ackedTransitions",
+            "notifyType",
+            "eventTimeStamps"
+         ]
+      },
+      {
+         "typeId": "channel",
+         "propsId": [
+            "presentValue",
+            "lastPriority",
+            "writeStatus",
+            "statusFlags",
+            "outOfService",
+            "channelNumber",
+            "controlGroups"
+         ]
+      },
+      {
+         "typeId": "lightingOutput",
+         "propsId": [
+            "trackingValue",
+            "presentValue",
+            "lightingCommand",
+            "inProgress",
+            "statusFlags",
+            "outOfService",
+            "blinkWarnEnable",
+            "egressTime",
+            "egressActive",
+            "defaultFadeTime",
+            "defaultRampRate",
+            "defaultStepIncrement",
+            "priorityArray",
+            "relinquishDefault",
+            "lightingCommandDefaultPriority"
+         ]
+      }
+   ]
+}
