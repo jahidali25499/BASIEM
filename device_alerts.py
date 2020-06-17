@@ -31,10 +31,10 @@ class Device_Alerts:
 	def device_alerts_bacnet(self):
 
 		ineq_dict = {
-					"<": operator.lt, 
-					">": operator.gt, 
-					"=": operator.eq
-					}
+				"<": operator.lt, 
+				">": operator.gt, 
+				"=": operator.eq
+				}
 
 		for i in self.json_file:
 
