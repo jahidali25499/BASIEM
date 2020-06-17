@@ -4,8 +4,6 @@ import time
 from apscheduler.schedulers.background import BackgroundScheduler
 
 
-
-
 def alert_1():
 
     print("Alert 1 Started")
