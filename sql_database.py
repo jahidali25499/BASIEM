@@ -1,3 +1,6 @@
+# Script to access SQL Database- Can be imported to other modules for convenience
+
+
 import mysql.connector
 from secret import Secret
 
