@@ -123,18 +123,8 @@ class Alerts:
             pass
 
 
-    def test_sql(self):
+    def delete_sql(self):
         print("Deleting")
         sql_command = '''TRUNCATE network_traffic;'''
         self.cursor.execute(sql_command)
 
-
-
-        
-
-                
-
-
-
-
-   
