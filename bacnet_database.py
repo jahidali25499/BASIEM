@@ -17,6 +17,7 @@ class Bacnet_Database:
 	def __init__(self):
 
 		self.bacnet = BAC0.lite()
+		# Send 'who-is' command to find devices on network 
 		self.devices = self.bacnet.whois()
 
 		if len(self.devices) == 0:
@@ -37,9 +38,10 @@ class Bacnet_Database:
 		self.cursor = self.mydb.cursor(buffered=True)
 
 
-	
+	# Add devices to the inventory_2 table
 	def get_inventory(self):
-		# Remove any existing devices first
+		
+		# Remove any existing devices first if not first time
 		self.clear_inventory()
 		for dev in self.devices:
                         
@@ -57,22 +59,21 @@ class Bacnet_Database:
 
 	
 
-
+	# Create individual tables for BACnet devices
 	def create_tables(self):
+		
+		# Remove any existing devices if not first time running scan  
 		self.clear_tables()
 
 		for dev in self.devices:
-	
 			device_name = self.bacnet.read("{} device {} objectName".format(dev[0], dev[1]))
 			sql_command = sql_command = 'CREATE TABLE {} (object MEDIUMTEXT, properties JSON)'.format(str(device_name))
 			self.cursor.execute(sql_command)
 			print("Table Created")
 
 
-
-
+			
 	def insert_prop_sql(self, device_name, objects, properties):
-		#cursor_2 = self.mydb.cursor(buffered=True)
 		prop_sql_command = "INSERT INTO {} (object, properties) VALUES (%s,%s)".format(device_name)
 		values = (objects, properties)
 		self.cursor.execute(prop_sql_command, values)
@@ -83,7 +84,7 @@ class Bacnet_Database:
 
 
 
-	# Attempt to convert bacpypes 'datetime' objects to date and time 
+	# Attempt to convert bacpypes 'datetime' objects to date and time - Hit or Miss Works half the time 
 	def convert_to_datetime(self, value):
 		datetime = None
 		try: 
@@ -168,6 +169,7 @@ class Bacnet_Database:
 
 
 	# Will attempts single read attempts if multiple read fails 
+	# Will use the file 'properties.json' to enumerate and find any missing properties
 	def single_read(self, device_name, device_address, obj, obj_number):
 
 		prop_sql_list = dict()
@@ -214,7 +216,7 @@ class Bacnet_Database:
 
 
 	# Remove tables for BACnet devices and those not in the whitelist
-	# ENSURE NEW TABLES THAT ARE NOT TO BE DELETED ARE INCLUDED INTO THE WHITELIST
+	# ENSURE NEW TABLES THAT ARE NOT TO BE DELETED ARE INCLUDED INTO THE WHITELIST 
 	def clear_tables(self):
 
 		whitelist = ["events", "inventory", "inventory_2", "Properties", "network_traffic", "alerts"]
@@ -342,7 +344,7 @@ class Bacnet_Database:
 	def close_database(self):
 		self.mydb.close()
 
-
+	# Only need to run this - simplifies everything since I no longer have any idea whats going on!
 	def run_full_scan(self):
 		self.get_inventory()
 		self.create_tables()
