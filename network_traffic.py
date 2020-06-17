@@ -165,19 +165,4 @@ class Network_Traffic:
 network = Network_Traffic("re-init.json")
 network.insert_traffic()
 network.insert_alerts()
-
-		
-
-
-
-
-
-
-
-
-
-
-
-
-
     
