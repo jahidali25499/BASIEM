@@ -42,7 +42,10 @@ class Bacnet_Database:
 	def get_inventory(self):
 		
 		# Remove any existing devices first if not first time
+		print("Deleting existing inventory")
 		self.clear_inventory()
+
+		print("Now Getting Inventory")
 		for dev in self.devices:
                         
 			last_seen = str(datetime.now())
@@ -62,6 +65,7 @@ class Bacnet_Database:
 	# Create individual tables for BACnet devices
 	def create_tables(self):
 		
+		print("Creating Tables")
 		# Remove any existing devices if not first time running scan  
 		self.clear_tables()
 
@@ -72,8 +76,9 @@ class Bacnet_Database:
 			print("Table Created")
 
 
-			
+	# Insert objects and properties into individual BACnet devices tables	
 	def insert_prop_sql(self, device_name, objects, properties):
+
 		prop_sql_command = "INSERT INTO {} (object, properties) VALUES (%s,%s)".format(device_name)
 		values = (objects, properties)
 		self.cursor.execute(prop_sql_command, values)
@@ -85,6 +90,7 @@ class Bacnet_Database:
 
 
 	# Attempt to convert bacpypes 'datetime' objects to date and time - Hit or Miss Works half the time 
+	# Should remove but cba having to untangle spahgetti code
 	def convert_to_datetime(self, value):
 		datetime = None
 		try: 
@@ -99,9 +105,14 @@ class Bacnet_Database:
 		return datetime
 
 				
-				
+			
 	def get_properties(self):
-                
+
+		# Exclude certian properties as these will constantly change the hash values 
+		exclusion_list = ["localTime", "localDate"]
+
+		print("Getting Properties")
+         
 		for dev in self.devices:
 			
 			objects = self.bacnet.read("{} device {} objectList".format(dev[0], dev[1]))
@@ -114,8 +125,17 @@ class Bacnet_Database:
 
 				try:
 					properties = self.bacnet.readMultiple("{} {} {} all".format(dev[0], obj[0], obj[1]), prop_id_required=True)
+
+					# Exclude them first before doing other stuff
+					for ex in exclusion_list:
+
+						for prop in properties:
+							if prop[1] == ex:
+								properties.remove(prop)
+
 					
 					for prop in properties:
+
 						try:
 							if isinstance(prop[0], tuple):
 								prop_list[prop[1]] = str(self.convert_to_datetime(prop[0]))
@@ -130,11 +150,15 @@ class Bacnet_Database:
 						except IndexError:
 							prop_list = dict()
 				
+				# Sometimes generates loads of errors - Dont really know why
 				except (InvalidTag, InvalidParameterDatatype, TypeError):
 					pass 
-			
+				
+				# Indicates 'multiple read' has failed and therefore will attempt to use 'single read' with specified properties
 				if len(prop_list) == 0:
 					self.single_read(device_name, dev[0], obj[0], obj[1])
+				
+				# Otherwise insert them into the table in JSON
 				else:
 					json_obj = json.dumps(prop_list)
 					self.insert_prop_sql(device_name, object_name, json_obj)
@@ -265,6 +289,7 @@ class Bacnet_Database:
 				try:
 					present_value = self.bacnet.read("{} {} {} presentValue".format(dev[0], obj[0], obj[1]))
 
+					# Try to convert to number rather than string if possible
 					if isinstance(present_value, (int, float)):
 						present_value = present_value
 					else:
@@ -274,6 +299,7 @@ class Bacnet_Database:
 					event_state = self.bacnet.read("{} {} {} eventState".format(dev[0], obj[0], obj[1]))
 					out_of_service = self.bacnet.read("{} {} {} outOfService".format(dev[0], obj[0], obj[1]))
 
+					# Convert to True or False strings rather than numbers
 					if out_of_service == 0:
 						out_of_service = "False"
 					if out_of_service == 1:
@@ -282,7 +308,7 @@ class Bacnet_Database:
 				except (NoResponseFromController, InvalidTag, UnknownPropertyError):
 					pass 
 
-				# Ignore device object as it does not contain present value property
+				# Ignore device object as it does not contain present value property and throws errors
 				if obj[0] == 'device':
 					pass
 
@@ -340,7 +366,7 @@ class Bacnet_Database:
 						pass 
 
 
-
+	# Never used this but keep just in case
 	def close_database(self):
 		self.mydb.close()
 
