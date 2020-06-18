@@ -344,7 +344,7 @@ class Bacnet_Database:
 	def close_database(self):
 		self.mydb.close()
 
-	# Only need to run this - simplifies everything since I no longer have any idea whats going on!
+	# Runs the main functions
 	def run_full_scan(self):
 		self.get_inventory()
 		self.create_tables()
