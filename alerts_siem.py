@@ -133,7 +133,7 @@ class Alerts:
         except KeyError:
             pass
 
-    # Convenient way of deleting table if HeidiSQL is being a bi**h
+    # Convenient way of deleting table if HeidiSQL is being a bother
     def delete_sql(self):
         print("Deleting")
         sql_command = '''TRUNCATE network_traffic;'''
