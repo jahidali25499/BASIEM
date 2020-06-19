@@ -1,7 +1,6 @@
 import json
 from sql_database import SQL_Database
 import time
-from apscheduler.schedulers.background import BackgroundScheduler
 
 
 class Alerts:
@@ -50,6 +49,26 @@ class Alerts:
         return result
 
 
+
+    def insert_packet_to_list(self, packet, rule_alert):
+
+        # If detected gather extra information such as IP addresses, time, etc.
+        source_ip = packet["_source"]["layers"]["ip"]["ip.src"]
+        dest_ip = packet["_source"]["layers"]["ip"]["ip.dst"]
+        time = packet["_source"]["layers"]["frame"]["frame.time"]
+        
+        # Epoch will be used to link alerts to its full network traffic
+        epoch_time = packet["_source"]["layers"]["frame"]["frame.time_epoch"]
+        json_epoch = json.dumps({"frame.time_epoch": epoch_time})
+        network_id = self.find_network_id(json_epoch)[0][0]
+
+        json_event = json.dumps({"alert": rule_alert, "time": time, "source_ip": str(source_ip), "dest_ip": str(dest_ip)})
+
+        # Add to alerts list
+        self.alerts_list.append(tuple([network_id, json_event]))
+
+
+
     # Rule to detect the 're-init' command in a packet
     def re_init_device(self, packet):
 
@@ -63,20 +82,9 @@ class Alerts:
                
                 # If detected gather extra information such as IP Address, time etc.
                 if int(apdu_type) == 0:
-                    source_ip = packet["_source"]["layers"]["ip"]["ip.src"]
-                    dest_ip = packet["_source"]["layers"]["ip"]["ip.dst"]
-                    time = packet["_source"]["layers"]["frame"]["frame.time"]          
+
                     alert = "Re-Initialisation Command Detected"
-                    
-                    # Epoch will be used to link alerts to its full network traffic
-                    epoch_time = packet["_source"]["layers"]["frame"]["frame.time_epoch"]
-                    json_epoch = json.dumps({"frame.time_epoch": epoch_time})
-                    network_id = self.find_network_id(json_epoch)[0][0]
-                
-                    json_event = json.dumps({"alert": alert, "time": time, "source_ip": str(source_ip), "dest_ip": str(dest_ip)})
-                    
-                    # Add to alerts list
-                    self.alerts_list.append(tuple([network_id, json_event]))
+                    self.insert_packet_to_list(packet, alert)
                     
         except KeyError:  
             pass
@@ -87,21 +95,12 @@ class Alerts:
         
         try:
             error_code = packet["_source"]["layers"]["bacapp"]["bacapp.error_code"]
-            
+
             # Password failure would have error code 26
             if int(error_code) == 26:
-                    source_ip = packet["_source"]["layers"]["ip"]["ip.src"]
-                    dest_ip = packet["_source"]["layers"]["ip"]["ip.dst"]
-                    time = packet["_source"]["layers"]["frame"]["frame.time"]    
+                      
                     alert = "Re-Initialisation Password Failure"
-
-                    epoch_time = packet["_source"]["layers"]["frame"]["frame.time_epoch"]
-                    json_epoch = json.dumps({"frame.time_epoch": epoch_time})
-                    network_id = self.find_network_id(json_epoch)[0][0]
-
-                    json_event = json.dumps({"alert": alert, "time": time, "source_ip": str(source_ip), "dest_ip": str(dest_ip)})
-
-                    self.alerts_list.append(tuple([network_id, json_event]))
+                    self.insert_packet_to_list(packet, alert)
 
         except KeyError:
             pass
@@ -116,20 +115,9 @@ class Alerts:
             # Detected in 'bvlc' layer which has the function code 5 in hexadecimal (hence 16 in int)
             if int(bvlc_function, 16) == 5:
 
-                    source_ip = packet["_source"]["layers"]["ip"]["ip.src"]
-                    dest_ip = packet["_source"]["layers"]["ip"]["ip.dst"]
-                    time = packet["_source"]["layers"]["frame"]["frame.time"]
                     alert = "Foreign Device Registration Detected"
-                    
-                    epoch_time = packet["_source"]["layers"]["frame"]["frame.time_epoch"]
-                    json_epoch = json.dumps({"frame.time_epoch": epoch_time})
-                    network_id = self.find_network_id(json_epoch)[0][0]
-                    
-                    json_event = json.dumps({"alert": alert, "time": time, "source_ip": str(source_ip), "dest_ip": str(dest_ip)})
-
-                    self.alerts_list.append(tuple([network_id, json_event]))
-
-
+                    self.insert_packet_to_list(packet, alert)
+    
         except KeyError:
             pass
 
