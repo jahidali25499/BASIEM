@@ -243,7 +243,7 @@ class Bacnet_Database:
 	# ENSURE NEW TABLES THAT ARE NOT TO BE DELETED ARE INCLUDED INTO THE WHITELIST 
 	def clear_tables(self):
 
-		whitelist = ["events", "inventory", "inventory_2", "Properties", "network_traffic", "alerts"]
+		whitelist = ["events", "inventory", "inventory_2", "Properties", "network_traffic", "alerts", "device_configs"]
 
 		sql_command = "SHOW TABLES"
 		self.cursor.execute(sql_command)
