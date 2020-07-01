@@ -118,11 +118,3 @@ if __name__ == "__main__":
     hash_database.verify_hash_all()
     #hash_database.verify_hash_single(device_name="myBacnetDevice01", device_number=1234)
     
-            
-
-        
-
-        
-
-    
-                
