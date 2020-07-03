@@ -8,7 +8,7 @@ from bacpypes.errors import InvalidTag, InvalidParameterDatatype
 import re 
 import json 
 import sys 
-from secret import Secret
+from config import Config
 
 
 
@@ -26,7 +26,7 @@ class Bacnet_Database:
 
 
 		# Credentials for database stored in the secret.py module 
-		credentials = Secret()
+		credentials = Config()
 
 		self.mydb = mysql.connector.connect(
 			host = credentials.host,
