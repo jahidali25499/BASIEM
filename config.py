@@ -1,6 +1,6 @@
 # Database Credentials - Use this file rather than hard coding them into scripts
 
-class Secret:
+class Config:
 
 	def __init__(self):
 
