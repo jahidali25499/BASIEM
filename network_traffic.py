@@ -159,7 +159,8 @@ class Network_Traffic:
         self.alerts.insert_into_database()
             
 
-network = Network_Traffic("example_traffic/re-init.json")
-network.insert_traffic()
-network.insert_alerts()
+if __name__ == "__main__":		
+	network = Network_Traffic("example_traffic/re-init.json")
+	network.insert_traffic()
+	network.insert_alerts()
     
