@@ -62,7 +62,7 @@ class Alerts:
         json_epoch = json.dumps({"frame.time_epoch": epoch_time})
         network_id = self.find_network_id(json_epoch)[0][0]
 
-        json_event = json.dumps({"alert": rule_alert, "time": time, "source_ip": str(source_ip), "dest_ip": str(dest_ip)})
+        json_event = json.dumps({"Alert": rule_alert, "Time": time, "Source_IP": str(source_ip), "Destination_IP": str(dest_ip)})
 
         # Add to alerts list
         self.alerts_list.append(tuple([network_id, json_event]))
