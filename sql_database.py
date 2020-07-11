@@ -2,7 +2,7 @@
 
 
 import mysql.connector
-from secret import Secret
+from config import Config
 
 
 
@@ -10,7 +10,7 @@ class SQL_Database:
 
     def __init__(self):
 
-        credentials = Secret()
+        credentials = Config()
 
         self.mydb = mysql.connector.connect(
                 host = credentials.host,
