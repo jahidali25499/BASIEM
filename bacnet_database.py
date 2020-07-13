@@ -139,14 +139,17 @@ class Bacnet_Database:
 					properties = self.bacnet.readMultiple("{} {} {} all".format(dev[0], obj[0], obj[1]), prop_id_required=True)
 
 
-					'''
+					
 					# Exclude them first before doing other stuff
 					for ex in exclusion_list:
 
 						for prop in properties:
-							if prop[1] == ex:
-								properties.remove(prop)
-					'''
+
+							try:
+								if prop[1] == ex:
+									properties.remove(prop)
+							except IndexError:
+								pass	
 					
 					for prop in properties:
 
