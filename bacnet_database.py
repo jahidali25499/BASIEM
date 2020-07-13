@@ -398,4 +398,3 @@ class Bacnet_Database:
 		self.get_properties()
 
 
-	bacnet.run_full_scan()
