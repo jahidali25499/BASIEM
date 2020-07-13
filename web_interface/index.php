@@ -7,21 +7,24 @@ BASIEM WebApp
 <?php
 include 'navbar.php';
 ?>
+
 <?php
 include_once('connection.php');
 $sql = "SELECT * FROM inventory_2;";
 $result = mysqli_query($db, $sql);
 $resultCheck = mysqli_num_rows($result);
 ?>
-<h2 style="text-align:center; margin-top:30px; margin-bottom:30px">Devices</h2>
+<h2 style="text-align:center; margin-top:30px; margin-bottom:30px">Devices
+</h2>
 <body>
+
 <table id="devices_table" class="table table-hover" style="width:70%; text-align:center"> 
   <thead class="thead-dark">
     <tr>
       <th scope="col">Device ID</th>
       <th scope="col">Last Seen</th>
       <th scope="col">Device Name</th>
-      <th scope="col">Events</th>
+      <!-- <th scope="col">Events</th> -->
       <th scope="col"></th>
       <th scope="col"></th>
     </tr>
@@ -36,7 +39,7 @@ while($rows=mysqli_fetch_assoc($result))
       <th scope="row"><?php echo $rows['deviceid']; ?></th>   
       <td><?php echo $rows['lastseen']; ?></td>
       <td><?php $device_name = $rows['devicename']; echo $device_name; ?></td>
-      <td><a href="events.php"><img src="icon.png" alt="Events" style="height:30px;"></td>
+      <!-- <td><a href="events.php"><img src="icon.png" alt="Events" style="height:30px;"></td> -->
       <td><button type="button" class="btn btn-dark"><a href="<?php $device_name = $rows['devicename']; echo 'properties.php?name='.$device_name; ?>" style="color: white">Objects</a></button></td>
       <td><button type="button" class="btn btn-dark"><a href="<?php $device_name=$rows['devicename']; $device_num=$rows['deviceid']; echo 'hash.php?device_name='.$device_name.'&device_num='.$device_num; ?>" style="color: white" onclick="return confirm('Generate hash for this device?')">Generate Hash</a></button></td>
 	  </tr>

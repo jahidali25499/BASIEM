@@ -14,13 +14,12 @@
         <a class="nav-link" href="index.php">Devices <span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item active">  
-        <a class="nav-link" href="index.php">All Events <span class="sr-only">(current)</span></a>
-      </li>
-      <li class="nav-item active">  
         <a class="nav-link" href="alerts.php">Alerts <span class="sr-only">(current)</span></a>
 
       <li class="nav-item active">  
         <a class="nav-link" href="hashing_page.php">Configuration Hashing <span class="sr-only">(current)</span></a>
+      <li class="nav-item active">  
+        <a class="nav-link" onclick="return confirm('Remove current devices and scan for new ones on network?')" href="#">Refresh Inventory <span class="sr-only">(current)</span></a>
       </li>
     </div>
     </head>

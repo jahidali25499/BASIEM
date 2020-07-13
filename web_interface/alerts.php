@@ -36,7 +36,6 @@ while($rows=mysqli_fetch_assoc($result))
       <td style="text-align:center"><?php echo $rows['timestamp']; ?></td>
       <td><?php $json_alert=$rows['alert']; $json_array=json_decode($json_alert, true); foreach($json_array as $key=>$value){ echo '<b>'.$key.'</b>'.": ".$value; echo '<br>'; } ?></td>
       <td><a href="<?php $network_id = $rows['id_network_traffic']; echo 'full_traffic.php?network_id='.$network_id; ?>"><img src="icon.png" alt="See Full Traffic" style=height:40px;"></td> 
-      <!-- <td><button type="button" class="btn btn-dark"><a href="<?php $device_name = $rows['devicename']; echo 'properties.php?name='.$device_name; ?>" style="color: white">Objects</a></button></td> Might use this later -->
 	  </tr>
   </tbody>
 

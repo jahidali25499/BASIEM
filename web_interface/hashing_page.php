@@ -19,7 +19,7 @@ $resultCheck = mysqli_num_rows($result);
   <thead class="thead-dark">
     <tr>
       <th scope="col">Device Name</th>
-      <th scope="col">Last Seen</th>
+      <th scope="col">Created On</th>
       <th scope="col">SHA256 Hash</th> 
       <!-- <th scope="col">Events</th> -->
       <th scope="col"></th>
