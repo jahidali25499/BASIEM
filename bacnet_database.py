@@ -77,14 +77,24 @@ class Bacnet_Database:
 
 
 	# Insert objects and properties into individual BACnet devices tables	
-	def insert_prop_sql(self, device_name, objects, properties):
+	def insert_prop_sql(self, device_name, obj_prop_list):
 
 		prop_sql_command = "INSERT INTO {} (object, properties) VALUES (%s,%s)".format(device_name)
-		values = (objects, properties)
+		values = obj_prop_list
+		self.cursor.executemany(prop_sql_command, values)
+		self.mydb.commit()
+
+		print(self.cursor.rowcount, "Records inserted")
+
+
+	def insert_singleprop_sql(self, device_name, object_name, json_obj):
+
+		prop_sql_command = "INSERT INTO {} (object, properties) VALUES (%s,%s)".format(device_name)
+		values = (object_name, json_obj)
 		self.cursor.execute(prop_sql_command, values)
 		self.mydb.commit()
 
-		print(self.cursor.rowcount, "Record inserted")
+		print(self.cursor.rowcount, "Records inserted")
 
 
 
@@ -119,6 +129,8 @@ class Bacnet_Database:
 			device_name = self.bacnet.read("{} device {} objectName".format(dev[0], dev[1]))
 			print("device_name: {}".format(device_name))
 
+			objname_jsonobj = []
+
 			for obj in objects:
 				prop_list = dict()
 				object_name = "{}:{}".format(obj[0], obj[1])
@@ -126,13 +138,15 @@ class Bacnet_Database:
 				try:
 					properties = self.bacnet.readMultiple("{} {} {} all".format(dev[0], obj[0], obj[1]), prop_id_required=True)
 
+
+					'''
 					# Exclude them first before doing other stuff
 					for ex in exclusion_list:
 
 						for prop in properties:
 							if prop[1] == ex:
 								properties.remove(prop)
-
+					'''
 					
 					for prop in properties:
 
@@ -161,7 +175,10 @@ class Bacnet_Database:
 				# Otherwise insert them into the table in JSON
 				else:
 					json_obj = json.dumps(prop_list)
-					self.insert_prop_sql(device_name, object_name, json_obj)
+
+					objname_jsonobj.append(tuple([object_name, json_obj]))
+			
+			self.insert_prop_sql(device_name, objname_jsonobj)
 					
 
 		
@@ -219,11 +236,12 @@ class Bacnet_Database:
 
 
 		if len(prop_sql_list) == 0:
-			self.enumerate_all_properties(device_name, device_address, obj, obj_number)
+			# self.enumerate_all_properties(device_name, device_address, obj, obj_number)
+			pass
 	
 		else:
 			json_obj = json.dumps(prop_sql_list)
-			self.insert_prop_sql(device_name, object_name, json_obj)
+			self.insert_singleprop_sql(device_name, object_name, json_obj)
 
 
 
@@ -380,5 +398,6 @@ class Bacnet_Database:
 
 
 
-
-
+if __name__ == "__main__":
+	bacnet = Bacnet_Database()
+	bacnet.run_full_scan()
