@@ -398,9 +398,4 @@ class Bacnet_Database:
 		self.get_properties()
 
 
-
-
-
-if __name__ == "__main__":
-	bacnet = Bacnet_Database()
 	bacnet.run_full_scan()

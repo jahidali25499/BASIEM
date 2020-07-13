@@ -137,7 +137,9 @@
             "modificationDate",
             "archive",
             "readOnly",
-            "fileAccessMethod"
+            "fileAccessMethod",
+            "description",
+            "readOnly"
          ]
       },
       {
@@ -454,6 +456,8 @@
          "typeId": "bitstringValue",
          "propsId": [
             "presentValue",
+            "statusFlags", 
+            "objectName",
             "statusFlags"
          ]
       },
@@ -461,7 +465,9 @@
          "typeId": "octetstringValue",
          "propsId": [
             "presentValue",
-            "statusFlags"
+            "statusFlags",
+            "objectName",
+            "description"
          ]
       },
       {
