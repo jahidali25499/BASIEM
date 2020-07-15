@@ -20,9 +20,9 @@ class Bacnet_Database:
 		# Send 'who-is' command to find devices on network 
 		self.devices = self.bacnet.whois()
 
-		if len(self.devices) == 0:
-			print("No BACnet Devices Found :(")
-			sys.exit()
+		#if len(self.devices) == 0:
+		#	print("No BACnet Devices Found :(")
+		#	sys.exit()
 
 
 		# Credentials for database stored in the secret.py module 
