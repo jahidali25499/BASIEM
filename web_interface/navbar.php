@@ -13,6 +13,9 @@
       <li class="nav-item active">
         <a class="nav-link" href="index.php">Devices <span class="sr-only">(current)</span></a>
       </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="events.php">Events <span class="sr-only">(current)</span></a>
+      </li>
       <li class="nav-item active">  
         <a class="nav-link" href="alerts.php">Alerts <span class="sr-only">(current)</span></a>
 

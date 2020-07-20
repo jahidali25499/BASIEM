@@ -9,7 +9,7 @@ include 'navbar.php';
 ?>
 <?php
 include_once('connection.php');
-$sql = "SELECT id, device_id, timestamp, event FROM events ;";
+$sql = "SELECT * FROM events;";
 $result = mysqli_query($db, $sql);
 $resultCheck = mysqli_num_rows($result);
 ?>
@@ -33,7 +33,7 @@ while($rows=mysqli_fetch_assoc($result))
     <tr style="text-align:center">
       <th scope="row"><?php echo $rows['device_id']; ?></th>
       <th scope="row" style="text-align: center"><?php echo $rows['id']; ?></th>
-      <th scope="row"><?php echo $rows['timestamp']; ?></th>
+      <th scope="row"><?php echo $rows['time_stamp']; ?></th>
       <th scope="row" style="text-align: center;"><?php echo $rows['event']; ?></th>
     </tr>
   </tbody>
