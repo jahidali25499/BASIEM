@@ -27,6 +27,7 @@ $resultCheck = mysqli_num_rows($result);
       <!-- <th scope="col">Events</th> -->
       <th scope="col"></th>
       <th scope="col"></th>
+      <th scope="col"></th>
     </tr>
   </thead>
   <tbody>
@@ -42,6 +43,7 @@ while($rows=mysqli_fetch_assoc($result))
       <!-- <td><a href="events.php"><img src="icon.png" alt="Events" style="height:30px;"></td> -->
       <td><button type="button" class="btn btn-dark"><a href="<?php $device_name = $rows['devicename']; echo 'properties.php?name='.$device_name; ?>" style="color: white">Objects</a></button></td>
       <td><button type="button" class="btn btn-dark"><a href="<?php $device_name=$rows['devicename']; $device_num=$rows['deviceid']; echo 'hash.php?device_name='.$device_name.'&device_num='.$device_num; ?>" style="color: white" onclick="return confirm('Generate hash for this device?')">Generate Hash</a></button></td>
+      <td><button type="button" class="btn btn-dark"><a href="index.php" style="color: white">Trust Device</a></button></td>
 	  </tr>
   </tbody>
 
