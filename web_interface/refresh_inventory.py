@@ -28,8 +28,8 @@ def unauth_device(dev_name, dev_id):
 
 	if cursor.rowcount == 0:
 		rule_alert = "Unauthorised BACnet Device"
-		time_utc = datetime.utcnow().__str__()
-		json_alert = json.dumps({"Alert": rule_alert, "Time": time_utc, "Device Name": dev_name, "Device ID": dev_id})
+		time = str(datetime.now())
+		json_alert = json.dumps({"Alert": rule_alert, "Time": time, "Device Name": dev_name, "Device ID": dev_id})
 
 		unauth_devices_list.append(tuple([json_alert,]))
 
