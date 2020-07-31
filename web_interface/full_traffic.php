@@ -26,5 +26,9 @@ while($rows=mysqli_fetch_assoc($result)) {
 ?>
 
 </body>
+
+<?php
+mysqli_close($db);
+?>
 </head>
 </html>
