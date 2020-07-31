@@ -54,3 +54,6 @@ for dev in result:
 
 
 insert_to_database()
+
+
+
