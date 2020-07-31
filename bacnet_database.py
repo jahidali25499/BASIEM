@@ -50,10 +50,11 @@ class Bacnet_Database:
                         
 			last_seen = str(datetime.now())
 			device_name = self.bacnet.read("{} device {} objectName".format(dev[0], dev[1]))
+			ip_address = str(dev[0])
 			device_id = dev[1]
 
-			sql_command = "INSERT INTO inventory_2 (devicename, deviceid, lastseen) VALUES (%s,%s,%s)"
-			values = (device_name, device_id, last_seen)
+			sql_command = "INSERT INTO inventory_2 (devicename, deviceid, ip_addr, lastseen) VALUES (%s,%s,%s,%s)"
+			values = (device_name, device_id, ip_address, last_seen)
 
 			self.cursor.execute(sql_command, values)
 			self.mydb.commit()
@@ -182,6 +183,8 @@ class Bacnet_Database:
 					objname_jsonobj.append(tuple([object_name, json_obj]))
 			
 			self.insert_prop_sql(device_name, objname_jsonobj)
+
+			self.close_database()
 					
 
 		
@@ -213,7 +216,7 @@ class Bacnet_Database:
 
 
 	# Will attempts single read attempts if multiple read fails 
-	# Will use the file 'properties.json' to enumerate and find any missing properties
+	# Will use the file 'properties.json' to enumerate and find any properties
 	def single_read(self, device_name, device_address, obj, obj_number):
 
 		prop_sql_list = dict()
@@ -264,7 +267,7 @@ class Bacnet_Database:
 	# ENSURE NEW TABLES THAT ARE NOT TO BE DELETED ARE INCLUDED INTO THE WHITELIST 
 	def clear_tables(self):
 
-		whitelist = ["events", "inventory", "inventory_2", "Properties", "network_traffic", "alerts", "device_configs"]
+		whitelist = ["events", "inventory", "inventory_2", "Properties", "network_traffic", "alerts", "device_configs", "trusted_devices"]
 
 		sql_command = "SHOW TABLES"
 		self.cursor.execute(sql_command)
@@ -387,7 +390,7 @@ class Bacnet_Database:
 						pass 
 
 
-	# Never used this but keep just in case
+	#Closes Connections
 	def close_database(self):
 		self.mydb.close()
 
