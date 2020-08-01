@@ -17,3 +17,10 @@ else {
 
 	echo "Error deleting records: ".mysqli_error($db);
 }
+
+mysqli_close($db);
+
+?>
+
+
+
