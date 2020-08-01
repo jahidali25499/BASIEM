@@ -25,7 +25,7 @@
         <a class="nav-link" onclick="return confirm('Remove current devices and scan for new ones on network?')" href="refresh_inventory.php">Refresh Inventory <span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item active">
-        <a class="nav-link" href="index.php">Trusted Devices<span class="sr-only">(current)</span></a>
+        <a class="nav-link" href="trust_device_page.php">Trusted Devices<span class="sr-only">(current)</span></a>
       </li>
     </div>
     </head>
