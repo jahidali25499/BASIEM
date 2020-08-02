@@ -25,7 +25,7 @@ class Bacnet_Database:
 		#	sys.exit()
 
 
-		# Credentials for database stored in the secret.py module 
+		# Credentials for database stored in the config.py module 
 		credentials = Config()
 
 		self.mydb = mysql.connector.connect(
