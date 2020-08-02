@@ -40,10 +40,6 @@ class Bacnet_Database:
 
 	# Add devices to the inventory_2 table
 	def get_inventory(self):
-		
-		# Remove any existing devices first if not first time
-		print("Deleting existing inventory")
-		self.clear_inventory()
 
 		print("Now Getting Inventory")
 		for dev in self.devices:
@@ -67,8 +63,6 @@ class Bacnet_Database:
 	def create_tables(self):
 		
 		print("Creating Tables")
-		# Remove any existing devices if not first time running scan  
-		self.clear_tables()
 
 		for dev in self.devices:
 			device_name = self.bacnet.read("{} device {} objectName".format(dev[0], dev[1]))
@@ -254,6 +248,8 @@ class Bacnet_Database:
 
 	# Clear entries for table 'inventory_2'
 	def clear_inventory(self):
+
+		print("Clearing Inventory")
 	
 		sql_command = "TRUNCATE inventory_2"
 		self.cursor.execute(sql_command)
@@ -263,20 +259,18 @@ class Bacnet_Database:
 
 
 
-	# Remove tables for BACnet devices and those not in the whitelist
-	# ENSURE NEW TABLES THAT ARE NOT TO BE DELETED ARE INCLUDED INTO THE WHITELIST 
 	def clear_tables(self):
 
-		whitelist = ["events", "inventory", "inventory_2", "Properties", "network_traffic", "alerts", "device_configs", "trusted_devices"]
+		print("Clearing Tables")
 
-		sql_command = "SHOW TABLES"
-		self.cursor.execute(sql_command)
-		tables = self.cursor.fetchall()
+		current_devices_sql = "SELECT devicename FROM inventory_2"
+		self.cursor.execute(current_devices_sql)
 
-		for i in tables:
-			if i[0] not in whitelist:
-				self.cursor.execute("DROP TABLE IF EXISTS {}".format(i[0]))
-				print("Table Deleted")
+		current_devices = self.cursor.fetchall()
+
+		for device in current_devices:
+			self.cursor.execute("DROP TABLE IF EXISTS {}".format(device[0]))
+			print("Device Deleted")
 
 
 
@@ -395,7 +389,9 @@ class Bacnet_Database:
 		self.mydb.close()
 
 	# Runs the main functions
-	def run_full_scan(self):
+	def run_scan(self):
+		self.clear_tables()
+		self.clear_inventory()
 		self.get_inventory()
 		self.create_tables()
 		self.get_properties()

@@ -12,7 +12,7 @@ from bacnet_database import Bacnet_Database
 from sql_database import SQL_Database
 
 bacnet = Bacnet_Database()
-bacnet.run_full_scan()
+bacnet.run_scan()
 
 
 sql = SQL_Database()
