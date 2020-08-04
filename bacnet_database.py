@@ -308,22 +308,10 @@ class Bacnet_Database:
 
 				try:
 					present_value = self.bacnet.read("{} {} {} presentValue".format(dev[0], obj[0], obj[1]))
-
-					# Try to convert to number rather than string if possible
-					if isinstance(present_value, (int, float)):
-						present_value = present_value
-					else:
-						present_value = str(present_value)
-
 					status_flags = self.bacnet.read("{} {} {} statusFlags".format(dev[0], obj[0], obj[1]))
 					event_state = self.bacnet.read("{} {} {} eventState".format(dev[0], obj[0], obj[1]))
 					out_of_service = self.bacnet.read("{} {} {} outOfService".format(dev[0], obj[0], obj[1]))
 
-					# Convert to True or False strings rather than numbers
-					if out_of_service == 0:
-						out_of_service = "False"
-					if out_of_service == 1:
-						out_of_service == "True"
 
 				except (NoResponseFromController, InvalidTag, UnknownPropertyError):
 					pass 
@@ -333,7 +321,7 @@ class Bacnet_Database:
 					pass
 
 				else:
-					device_obj_list.append(tuple([device_name, object_name, time_stamp, present_value, str(status_flags), event_state, out_of_service]))
+					device_obj_list.append(tuple([device_name, object_name, time_stamp, str(present_value), str(status_flags), event_state, out_of_service]))
 	
 			self.insert_presentvalue_sql(device_obj_list)
 
