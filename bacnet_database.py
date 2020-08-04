@@ -276,12 +276,12 @@ class Bacnet_Database:
 
 
 	# Insert values into the 'Properties' table
-	def insert_presentvalue_sql(self, device_name, object_name, time_stamp, present_value, status_flags, event_state, out_of_service):
+	def insert_presentvalue_sql(self, device_obj_list):
 		#cursor_5 = self.mydb.cursor(buffered=True)
 
 		prop_sql_command = "INSERT INTO Properties (devicename, objectname, time_stamp, present_value, status_flags, event_state, out_of_service) VALUES (%s,%s,%s,%s,%s,%s,%s)"
-		values = (device_name, object_name, time_stamp, present_value, status_flags, event_state, out_of_service)
-		self.cursor.execute(prop_sql_command, values)
+		values = device_obj_list
+		self.cursor.executemany(prop_sql_command, values)
 		self.mydb.commit()
 
 		print(self.cursor.rowcount, "Properties Record Inserted")
@@ -295,6 +295,8 @@ class Bacnet_Database:
 		for dev in self.devices:
 			device_name = self.bacnet.read("{} device {} objectName".format(dev[0], dev[1]))
 			objects = self.bacnet.read("{} device {} objectList".format(dev[0], dev[1]))
+
+			device_obj_list = []
 
 			for obj in objects:
 				object_name = "{}:{}".format(obj[0], obj[1])
@@ -331,9 +333,9 @@ class Bacnet_Database:
 					pass
 
 				else:
-					self.insert_presentvalue_sql(device_name, object_name, time_stamp, present_value, str(status_flags), event_state, out_of_service)
+					device_obj_list.append(tuple([device_name, object_name, time_stamp, present_value, str(status_flags), event_state, out_of_service]))
 	
-
+			self.insert_presentvalue_sql(device_obj_list)
 
 
 	# Store Values into the 'events' table 
