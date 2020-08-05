@@ -31,9 +31,9 @@ $resultCheck = mysqli_num_rows($result);
           }
           ?>
         ]);
-
+      
         var options = {
-          title: 'Bacnet Device',
+          title: <?php echo "'$device_name'"?>,
           curveType: 'function',
           legend: { position: 'bottom' }
         };
