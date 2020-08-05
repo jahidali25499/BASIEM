@@ -18,5 +18,6 @@ else {
 	echo "<script>alert('Error deleting record: '.$mysqli_error($db).'</script>'";
 }
 
+mysqli_close($db);
 
 ?>

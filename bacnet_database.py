@@ -25,7 +25,7 @@ class Bacnet_Database:
 		#	sys.exit()
 
 
-		# Credentials for database stored in the secret.py module 
+		# Credentials for database stored in the config.py module 
 		credentials = Config()
 
 		self.mydb = mysql.connector.connect(
@@ -40,20 +40,17 @@ class Bacnet_Database:
 
 	# Add devices to the inventory_2 table
 	def get_inventory(self):
-		
-		# Remove any existing devices first if not first time
-		print("Deleting existing inventory")
-		self.clear_inventory()
 
 		print("Now Getting Inventory")
 		for dev in self.devices:
                         
 			last_seen = str(datetime.now())
 			device_name = self.bacnet.read("{} device {} objectName".format(dev[0], dev[1]))
+			ip_address = str(dev[0])
 			device_id = dev[1]
 
-			sql_command = "INSERT INTO inventory_2 (devicename, deviceid, lastseen) VALUES (%s,%s,%s)"
-			values = (device_name, device_id, last_seen)
+			sql_command = "INSERT INTO inventory_2 (devicename, deviceid, ip_addr, lastseen) VALUES (%s,%s,%s,%s)"
+			values = (device_name, device_id, ip_address, last_seen)
 
 			self.cursor.execute(sql_command, values)
 			self.mydb.commit()
@@ -66,8 +63,6 @@ class Bacnet_Database:
 	def create_tables(self):
 		
 		print("Creating Tables")
-		# Remove any existing devices if not first time running scan  
-		self.clear_tables()
 
 		for dev in self.devices:
 			device_name = self.bacnet.read("{} device {} objectName".format(dev[0], dev[1]))
@@ -182,6 +177,8 @@ class Bacnet_Database:
 					objname_jsonobj.append(tuple([object_name, json_obj]))
 			
 			self.insert_prop_sql(device_name, objname_jsonobj)
+
+			self.close_database()
 					
 
 		
@@ -213,7 +210,7 @@ class Bacnet_Database:
 
 
 	# Will attempts single read attempts if multiple read fails 
-	# Will use the file 'properties.json' to enumerate and find any missing properties
+	# Will use the file 'properties.json' to enumerate and find any properties
 	def single_read(self, device_name, device_address, obj, obj_number):
 
 		prop_sql_list = dict()
@@ -251,6 +248,8 @@ class Bacnet_Database:
 
 	# Clear entries for table 'inventory_2'
 	def clear_inventory(self):
+
+		print("Clearing Inventory")
 	
 		sql_command = "TRUNCATE inventory_2"
 		self.cursor.execute(sql_command)
@@ -260,31 +259,29 @@ class Bacnet_Database:
 
 
 
-	# Remove tables for BACnet devices and those not in the whitelist
-	# ENSURE NEW TABLES THAT ARE NOT TO BE DELETED ARE INCLUDED INTO THE WHITELIST 
 	def clear_tables(self):
 
-		whitelist = ["events", "inventory", "inventory_2", "Properties", "network_traffic", "alerts", "device_configs"]
+		print("Clearing Tables")
 
-		sql_command = "SHOW TABLES"
-		self.cursor.execute(sql_command)
-		tables = self.cursor.fetchall()
+		current_devices_sql = "SELECT devicename FROM inventory_2"
+		self.cursor.execute(current_devices_sql)
 
-		for i in tables:
-			if i[0] not in whitelist:
-				self.cursor.execute("DROP TABLE IF EXISTS {}".format(i[0]))
-				print("Table Deleted")
+		current_devices = self.cursor.fetchall()
+
+		for device in current_devices:
+			self.cursor.execute("DROP TABLE IF EXISTS {}".format(device[0]))
+			print("Device Deleted")
 
 
 
 
 	# Insert values into the 'Properties' table
-	def insert_presentvalue_sql(self, device_name, object_name, time_stamp, present_value, status_flags, event_state, out_of_service):
+	def insert_presentvalue_sql(self, device_obj_list):
 		#cursor_5 = self.mydb.cursor(buffered=True)
 
 		prop_sql_command = "INSERT INTO Properties (devicename, objectname, time_stamp, present_value, status_flags, event_state, out_of_service) VALUES (%s,%s,%s,%s,%s,%s,%s)"
-		values = (device_name, object_name, time_stamp, present_value, status_flags, event_state, out_of_service)
-		self.cursor.execute(prop_sql_command, values)
+		values = device_obj_list
+		self.cursor.executemany(prop_sql_command, values)
 		self.mydb.commit()
 
 		print(self.cursor.rowcount, "Properties Record Inserted")
@@ -299,6 +296,8 @@ class Bacnet_Database:
 			device_name = self.bacnet.read("{} device {} objectName".format(dev[0], dev[1]))
 			objects = self.bacnet.read("{} device {} objectList".format(dev[0], dev[1]))
 
+			device_obj_list = []
+
 			for obj in objects:
 				object_name = "{}:{}".format(obj[0], obj[1])
 				time_stamp = str(datetime.now())
@@ -309,22 +308,10 @@ class Bacnet_Database:
 
 				try:
 					present_value = self.bacnet.read("{} {} {} presentValue".format(dev[0], obj[0], obj[1]))
-
-					# Try to convert to number rather than string if possible
-					if isinstance(present_value, (int, float)):
-						present_value = present_value
-					else:
-						present_value = str(present_value)
-
 					status_flags = self.bacnet.read("{} {} {} statusFlags".format(dev[0], obj[0], obj[1]))
 					event_state = self.bacnet.read("{} {} {} eventState".format(dev[0], obj[0], obj[1]))
 					out_of_service = self.bacnet.read("{} {} {} outOfService".format(dev[0], obj[0], obj[1]))
 
-					# Convert to True or False strings rather than numbers
-					if out_of_service == 0:
-						out_of_service = "False"
-					if out_of_service == 1:
-						out_of_service == "True"
 
 				except (NoResponseFromController, InvalidTag, UnknownPropertyError):
 					pass 
@@ -334,9 +321,9 @@ class Bacnet_Database:
 					pass
 
 				else:
-					self.insert_presentvalue_sql(device_name, object_name, time_stamp, present_value, str(status_flags), event_state, out_of_service)
+					device_obj_list.append(tuple([device_name, object_name, time_stamp, str(present_value), str(status_flags), event_state, out_of_service]))
 	
-
+			self.insert_presentvalue_sql(device_obj_list)
 
 
 	# Store Values into the 'events' table 
@@ -387,12 +374,14 @@ class Bacnet_Database:
 						pass 
 
 
-	# Never used this but keep just in case
+	#Closes Connections
 	def close_database(self):
 		self.mydb.close()
 
 	# Runs the main functions
-	def run_full_scan(self):
+	def run_scan(self):
+		self.clear_tables()
+		self.clear_inventory()
 		self.get_inventory()
 		self.create_tables()
 		self.get_properties()
