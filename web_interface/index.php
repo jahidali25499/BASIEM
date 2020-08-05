@@ -25,7 +25,7 @@ $resultCheck = mysqli_num_rows($result);
       <th scope="col">Last Seen</th>
       <th scope="col">Device Name</th>
       <th scope="col">IP Address</th>
-      <!-- <th scope="col">Events</th> -->
+      <th scope="col"></th>
       <th scope="col"></th>
       <th scope="col"></th>
       <th scope="col"></th>
@@ -42,11 +42,11 @@ while($rows=mysqli_fetch_assoc($result))
       <td><?php echo $rows['lastseen']; ?></td>
       <td><?php echo $rows['devicename']; ?></td>
       <td><?php echo $rows['ip_addr']; ?></td>
-      <!-- <td><a href="events.php"><img src="icon.png" alt="Events" style="height:30px;"></td> -->
       <td><button type="button" class="btn btn-dark"><a href="<?php $device_name = $rows['devicename']; echo 'properties.php?name='.$device_name; ?>" style="color: white">Objects</a></button></td>
       <td><button type="button" class="btn btn-dark"><a href="<?php $device_name=$rows['devicename']; $device_num=$rows['deviceid']; echo 'hash.php?device_name='.$device_name.'&device_num='.$device_num; ?>" style="color: white" onclick="return confirm('Generate hash for this device?')">Generate Hash</a></button></td>
       <td><button type="button" class="btn btn-dark"><a href="<?php $device_name=$rows['devicename']; $device_num=$rows['deviceid']; echo 'trust_device.php?device_name='.$device_name.'&device_num='.$device_num; ?>" style="color: white" onclick="return confirm('Trust this device?')">Trust Device</a></button></td>
-	  </tr>
+      <td><button type="button" class="btn btn-dark"><a href="<?php $device_name=$rows['devicename']; echo 'graph.php?name='.$device_name; ?>" style="color: white">Events</a></button></td>
+    </tr>
   </tbody>
 
 <?php 
