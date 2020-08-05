@@ -44,9 +44,9 @@ $resultCheck = mysqli_num_rows($result);
       }
     </script>
 </head>
-<h2 style="text-align:center; margin-top:30px; margin-bottom:30px">Objects</h2>
+<h2 style="text-align:center; margin-top:30px; margin-bottom:30px;">Events</h2>
 <body>
-<div id="curve_chart" style="width: 900px; height: 500px"></div>
+<div id="curve_chart" style="width: 1700px; height: 800px; align:center; margin: auto; margin-bottom:100px"></div>
 <table class="table table-hover" style="width:50%; text-align:center"> 
   <thead class="thead-dark">
     <tr>
