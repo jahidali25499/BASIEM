@@ -11,7 +11,7 @@ include 'navbar.php';
 include_once('connection.php');
 $device_name = $_GET['name'];
 
-$sql = "SELECT devicename, time_stamp, present_value FROM Properties WHERE objectname='analogInput:1';";
+$sql = "SELECT devicename, time_stamp, present_value FROM Properties WHERE objectname='analogInput:1' AND devicename='$device_name';";
 $result = mysqli_query($db, $sql);
 $resultCheck = mysqli_num_rows($result);
 ?>
@@ -44,10 +44,20 @@ $resultCheck = mysqli_num_rows($result);
       }
     </script>
 </head>
-<h2 style="text-align:center; margin-top:30px; margin-bottom:30px;">Events</h2>
+<div class="container">
+  <div class="row">
+    <div class="col-md-4 offset-md-4 ">
+    <h2 style="text-align:center; margin-top:30px; margin-bottom:30px;">Events</h2>
+    </div>
+  </div>
+
+  <div class="row">
+    <div id="curve_chart" class="col-xl-12 align-self-center;" style="height: 550px;"> 
+    </div>
+  </div>
+</div>
 <body>
-<div id="curve_chart" style="width: 1700px; height: 800px; align:center; margin: auto; margin-bottom:100px"></div>
-<table class="table table-hover" style="width:50%; text-align:center"> 
+<table class="table table-hover" style="width:50%; text-align:center; margin-top:55px"> 
   <thead class="thead-dark">
     <tr>
       <th scope="col">Device</th>
@@ -57,6 +67,11 @@ $resultCheck = mysqli_num_rows($result);
   </thead>
   <tbody>
 <?php
+include_once('connection.php');
+$device_name = $_GET['name'];
+$sql = "SELECT devicename, time_stamp, present_value FROM Properties WHERE objectname='analogInput:1';";
+$result = mysqli_query($db, $sql);
+$resultCheck = mysqli_num_rows($result);
 if ($resultCheck > 0) {
 while($rows=mysqli_fetch_assoc($result))
 {
@@ -64,7 +79,7 @@ while($rows=mysqli_fetch_assoc($result))
     <tr style="text-align:center">
       <th scope="row"><?php echo $rows['devicename']; ?></th>
       <th scope="row"><?php echo $rows['time_stamp']; ?></th>
-      <th scope="row"><?php echo $rows['present_value']; ?></th>
+      <th scope="row"><?php echo round($rows['present_value'], 2); ?></th>
     </tr>
   </tbody>
 
