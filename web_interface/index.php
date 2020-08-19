@@ -18,10 +18,10 @@ $resultCheck = mysqli_num_rows($result);
 </h2>
 <body>
 
-<table id="devices_table" class="table table-hover" style="width:70%; text-align:center"> 
+<table id="devices_table" class="table table-hover" style="width:80%; text-align:center"> 
   <thead class="thead-dark">
     <tr>
-      <th scope="col">Device ID</th>
+      <th scope="col" style="width:100px">Device ID</th>
       <th scope="col">Last Seen</th>
       <th scope="col">Device Name</th>
       <th scope="col">IP Address</th>
@@ -42,10 +42,10 @@ while($rows=mysqli_fetch_assoc($result))
       <td><?php echo $rows['lastseen']; ?></td>
       <td><?php echo $rows['devicename']; ?></td>
       <td><?php echo $rows['ip_addr']; ?></td>
-      <td><button type="button" class="btn btn-dark"><a href="<?php $device_name = $rows['devicename']; echo 'properties.php?name='.$device_name; ?>" style="color: white">Objects</a></button></td>
+      <td><button type="button" class="btn btn-dark" style="height:62px"><a href="<?php $device_name = $rows['devicename']; echo 'properties.php?name='.$device_name; ?>" style="color: white">Objects</a></button></td>
       <td><button type="button" class="btn btn-dark"><a href="<?php $device_name=$rows['devicename']; $device_num=$rows['deviceid']; echo 'hash.php?device_name='.$device_name.'&device_num='.$device_num; ?>" style="color: white" onclick="return confirm('Generate hash for this device?')">Generate Hash</a></button></td>
       <td><button type="button" class="btn btn-dark"><a href="<?php $device_name=$rows['devicename']; $device_num=$rows['deviceid']; echo 'trust_device.php?device_name='.$device_name.'&device_num='.$device_num; ?>" style="color: white" onclick="return confirm('Trust this device?')">Trust Device</a></button></td>
-      <td><button type="button" class="btn btn-dark"><a href="<?php $device_name=$rows['devicename']; echo 'graph.php?name='.$device_name; ?>" style="color: white">Events</a></button></td>
+      <td><button type="button" class="btn btn-dark" style="height:62px"><a href="<?php $device_name=$rows['devicename']; echo 'graph.php?name='.$device_name; ?>" style="color: white">Events</a></button></td>
     </tr>
   </tbody>
 
