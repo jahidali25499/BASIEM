@@ -31,10 +31,10 @@ while($rows=mysqli_fetch_assoc($result))
 {
 ?>
     <tr style="text-align:center">
-      <th scope="row"> <?php echo $rows['device_name']; ?></th>   
+      <th scope="row"> <?php echo htmlspecialchars($rows['device_name']); ?></th>   
       <td><?php echo $rows['device_id']; ?></td>
       <!-- <td><a href="events.php"><img src="icon.png" alt="Events" style="height:30px;"></td> -->
-      <td><button type="button" class="btn btn-dark"><a href="<?php $device_name=$rows['device_name']; $device_num=$rows['device_id']; echo 'revoke_trust.php?device_name='.$device_name.'&device_num='.$device_num; ?>" style="color: white" onclick="return confirm('Remove device from being trusted?')">Revoke Trust</a></button></td>
+      <td><button type="button" class="btn btn-dark"><a href="<?php $device_name=htmlspecialchars($rows['device_name']); $device_num=$rows['device_id']; echo 'revoke_trust.php?device_name='.$device_name.'&device_num='.$device_num; ?>" style="color: white" onclick="return confirm('Remove device from being trusted?')">Revoke Trust</a></button></td>
    
 	  </tr>
   </tbody>

@@ -40,12 +40,12 @@ while($rows=mysqli_fetch_assoc($result))
     <tr style="text-align:center">
       <th scope="row"><?php echo $rows['deviceid']; ?></th>   
       <td><?php echo $rows['lastseen']; ?></td>
-      <td><?php echo $rows['devicename']; ?></td>
+      <td><?php echo htmlspecialchars($rows['devicename']); ?></td>
       <td><?php echo $rows['ip_addr']; ?></td>
-      <td><button type="button" class="btn btn-dark" style="height:62px"><a href="<?php $device_name = $rows['devicename']; echo 'properties.php?name='.$device_name; ?>" style="color: white">Objects</a></button></td>
-      <td><button type="button" class="btn btn-dark"><a href="<?php $device_name=$rows['devicename']; $device_num=$rows['deviceid']; echo 'hash.php?device_name='.$device_name.'&device_num='.$device_num; ?>" style="color: white" onclick="return confirm('Generate hash for this device?')">Generate Hash</a></button></td>
-      <td><button type="button" class="btn btn-dark"><a href="<?php $device_name=$rows['devicename']; $device_num=$rows['deviceid']; echo 'trust_device.php?device_name='.$device_name.'&device_num='.$device_num; ?>" style="color: white" onclick="return confirm('Trust this device?')">Trust Device</a></button></td>
-      <td><button type="button" class="btn btn-dark" style="height:62px"><a href="<?php $device_name=$rows['devicename']; echo 'graph.php?name='.$device_name; ?>" style="color: white">Events</a></button></td>
+      <td><button type="button" class="btn btn-dark" style="height:62px"><a href="<?php $device_name = htmlspecialchars($rows['devicename']); echo 'properties.php?name='.$device_name; ?>" style="color: white">Objects</a></button></td>
+      <td><button type="button" class="btn btn-dark"><a href="<?php $device_name=htmlspecialchars($rows['devicename']); $device_num=$rows['deviceid']; echo 'hash.php?device_name='.$device_name.'&device_num='.$device_num; ?>" style="color: white" onclick="return confirm('Generate hash for this device?')">Generate Hash</a></button></td>
+      <td><button type="button" class="btn btn-dark"><a href="<?php $device_name=htmlspecialchars($rows['devicename']); $device_num=$rows['deviceid']; echo 'trust_device.php?device_name='.$device_name.'&device_num='.$device_num; ?>" style="color: white" onclick="return confirm('Trust this device?')">Trust Device</a></button></td>
+      <td><button type="button" class="btn btn-dark" style="height:62px"><a href="<?php $device_name=htmlspecialchars($rows['devicename']); echo 'graph.php?name='.$device_name; ?>" style="color: white">Events</a></button></td>
     </tr>
   </tbody>
 

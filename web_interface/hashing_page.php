@@ -33,12 +33,12 @@ while($rows=mysqli_fetch_assoc($result))
 {
 ?>
     <tr style="text-align:center">
-      <th scope="row"><?php echo $rows['device_name']; ?></th>   
+      <th scope="row"><?php echo htmlspecialchars($rows['device_name']); ?></th>   
       <td><?php echo $rows['time_stamp']; ?></td>
       <td><?php echo $rows['hash']; ?></td>
       <!-- <td><a href="events.php"><img src="icon.png" alt="Events" style="height:30px;"></td> -->
-      <td><button type="button" class="btn btn-dark"><a href="<?php $device_name=$rows['device_name']; echo 'integrity.php?device_name='.$device_name; ?>" style="color: white" onclick="return confirm('Check Integrity?')">Check Integrity</a></button></td>
-      <td><button type="button" class="btn btn-dark"><a href="<?php $device_name=$rows['device_name']; echo 'delete_hash.php?device_name='.$device_name; ?>" style="color: white" onclick="return confirm('Delete this hash?')">Delete Hash</a></button></td>
+      <td><button type="button" class="btn btn-dark"><a href="<?php $device_name=htmlspecialchars($rows['device_name']); echo 'integrity.php?device_name='.$device_name; ?>" style="color: white" onclick="return confirm('Check Integrity?')">Check Integrity</a></button></td>
+      <td><button type="button" class="btn btn-dark"><a href="<?php $device_name=htmlspecialchars($rows['device_name']); echo 'delete_hash.php?device_name='.$device_name; ?>" style="color: white" onclick="return confirm('Delete this hash?')">Delete Hash</a></button></td>
 	  </tr>
   </tbody>
 
