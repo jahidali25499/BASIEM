@@ -46,7 +46,7 @@ class OTX:
 
 
 # This API key is no longer valid!
-search = OTX("880c7334ad91a33971f56b1b3ad974738fd3d02a2ead6fd963d046afcbdb67f3")
+search = OTX("")
 all_pulses = search.otx_all()
 
 
